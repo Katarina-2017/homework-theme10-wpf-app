@@ -1,0 +1,29 @@
+﻿<Window x:Class="HomeWorkTheme10WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HomeWorkTheme10WpfApp"
+        mc:Ignorable="d"
+        Title="Банк А" Height="450" Width="800" Icon="/Picture/logo-bank.png" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource SecondaryBrush}">
+            <TextBlock Style="{StaticResource BlockHeader}" 
+                       TextWrapping="Wrap" Text="{Binding ElementName=MainFrame, Path=Content.Title}"/>
+            <Button Style="{DynamicResource buttonResourse}" Name="btnBack"
+                       Content="Назад" Margin="680,20,0,0" Click="btnBack_Click"/>
+        </Grid>
+        <Grid Grid.Row="2" Background="{StaticResource SecondaryBrush}"></Grid>
+       
+        <Frame x:Name="MainFrame"
+               NavigationUIVisibility="Hidden"
+               VerticalAlignment="Top"
+               Grid.Row="1" Height="329"/>
+       
+    </Grid>
+</Window>
