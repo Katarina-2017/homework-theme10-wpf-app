@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HomeWorkTheme10WpfApp.Classes;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,14 @@ namespace HomeWorkTheme10WpfApp.Pages
         public PageСonsultant()
         {
             InitializeComponent();
+
+            string path = "C:\\Users\\Home\\source\\repos\\HomeWorkTheme10WpfApp\\clients.json";
+
+            var listOfClients = new Consultant(path);
+
+            dtgClients.ItemsSource = listOfClients.GetClientsFromJson();
+
+            dtgClients.IsReadOnly= true;
         }
     }
 }

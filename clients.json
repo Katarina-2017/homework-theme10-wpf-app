@@ -1,0 +1,76 @@
+{
+"clients":[
+  {
+    "surname": "Имя_1",
+    "name": "Фамилия_1",
+    "patronymic": "male_1",
+    
+    "passport": {
+      "series": "101",
+      "number": "78787878"
+      
+    },
+    "phoneNumber": "666666666"
+  },
+  {
+    "surname": "Имя_2",
+    "name": "Фамилия_2",
+    "patronymic": "male_2",
+    
+    "passport": {
+      "series": "1011",
+      "number": "232323233"
+      
+    },
+    "phoneNumber": ""
+  },
+  {
+    "surname": "Имя_3",
+    "name": "Фамилия_3",
+    "patronymic": "male_3",
+    
+    "passport": {
+      "series": "1111",
+      "number": "544545454545"
+      
+    },
+    "phoneNumber": "3232366666"
+  },
+  {
+    "surname": "Имя_4",
+    "name": "Фамилия_4",
+    "patronymic": "male_4",
+    
+    "passport": {
+      "series": "1414",
+      "number": "77777777777"
+      
+    },
+    "phoneNumber": "33333333"
+  },
+  {
+    "surname": "Имя_5",
+    "name": "Фамилия_5",
+    "patronymic": "male_5",
+    
+    "passport": {
+      "series": "1614",
+      "number": "4444444"
+      
+    },
+    "phoneNumber": "6111145454"
+  },
+  {
+    "surname": "Имя_6",
+    "name": "Фамилия_6",
+    "patronymic": "male_6",
+    
+    "passport": {
+      "series": "2624",
+      "number": "2224444"
+      
+    },
+    "phoneNumber": "+7111145454"
+  }
+]
+}

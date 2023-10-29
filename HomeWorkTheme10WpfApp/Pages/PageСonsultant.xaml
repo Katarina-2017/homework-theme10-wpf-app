@@ -9,6 +9,16 @@
       Title="Окно консультанта">
 
     <Grid>
-        
+        <DataGrid x:Name="dtgClients" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}">
+        <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Фамилия" Binding="{Binding Surname}"/>
+                <DataGridTextColumn Width="*" Header="Имя" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="*" Header="Отчество" Binding="{Binding Patronymic}"/>
+                <DataGridTextColumn Width="*" Header="Номер телефона" Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn Width="*" Header="Серия паспорта" Binding="{Binding SeriesOfPassport}"/>
+                <DataGridTextColumn Width="*" Header="Номер паспорта" Binding="{Binding NumberOfPassport}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Page>

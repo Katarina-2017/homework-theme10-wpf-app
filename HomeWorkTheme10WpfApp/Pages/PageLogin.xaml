@@ -17,7 +17,7 @@
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
-                        <TextBlock Text="{Binding User}"/>
+                        <TextBlock Text="{Binding Role}"/>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>

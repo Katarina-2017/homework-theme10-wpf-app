@@ -10,7 +10,7 @@ namespace HomeWorkTheme10WpfApp.Classes
 {
     public class Users
     {
-        public string User { get; set; } = "";
+        public string Role { get; set; } = "";
 
         public ObservableCollection<Users> usersCollection = new ObservableCollection<Users>();
         
@@ -18,12 +18,12 @@ namespace HomeWorkTheme10WpfApp.Classes
         {
             usersCollection.Add(new Users()
             {
-                User = "консультант"
+                Role = "консультант"
             });
 
             usersCollection.Add(new Users()
             {
-                User = "менеджер"
+                Role = "менеджер"
             });
             
             return usersCollection;
