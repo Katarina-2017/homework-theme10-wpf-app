@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HomeWorkTheme10WpfApp.Classes
 {
-    internal class Clients
+    public class Clients
     {
         string surname;
         string name;

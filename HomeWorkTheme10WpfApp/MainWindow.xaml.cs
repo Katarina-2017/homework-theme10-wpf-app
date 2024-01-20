@@ -39,5 +39,7 @@ namespace HomeWorkTheme10WpfApp
                 MainFrame.GoBack();
             }
         }
+
+      
     }
 }

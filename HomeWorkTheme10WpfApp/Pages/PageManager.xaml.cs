@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HomeWorkTheme10WpfApp.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,18 @@ namespace HomeWorkTheme10WpfApp.Pages
         public PageManager()
         {
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var listOfClients = new Manager();
+            dtgClients.ItemsSource = listOfClients.GetAllClients();
+        }
+
+        private void btnAddClient_Click(object sender, RoutedEventArgs e)
+        {
+            var currentClient = (sender as Button).DataContext as Clients;
+            NavigationService.Navigate(new AddEditClientInfoPage(currentClient));
         }
     }
 }

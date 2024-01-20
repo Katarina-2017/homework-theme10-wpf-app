@@ -38,13 +38,20 @@
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
     </Style>
-    
-    <Style x:Key="BlockHeader" TargetType="TextBlock">
 
+    <Style x:Key="BlockHeader" TargetType="TextBlock">
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="30"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
+
+    </Style>
+
+    <Style TargetType="DataGrid"  x:Key="dataGridResourse">
+        <Setter Property="Margin" Value="0,10,0,5"/>
+        <Setter Property="AlternatingRowBackground" Value="LightBlue"/>
+        <Setter Property="AlternationCount" Value="2"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
 
     </Style>
 

@@ -25,5 +25,7 @@
         <Button Style="{StaticResource buttonResourse}"
                 x:Name="btnSignIn"
             Content="Войти в систему" Margin="312,165,0,0" Grid.Row="1" Height="40" Width="136" Click="btnSignIn_Click"/>
+        
+
     </Grid>
 </Page>

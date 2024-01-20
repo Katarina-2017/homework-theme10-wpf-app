@@ -13,5 +13,6 @@ namespace HomeWorkTheme10WpfApp
     /// </summary>
     public partial class App : Application
     {
+        public static int CurrentUser = -1;
     }
 }

@@ -10,20 +10,21 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="55"/>
+
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{StaticResource SecondaryBrush}">
             <TextBlock Style="{StaticResource BlockHeader}" 
                        TextWrapping="Wrap" Text="{Binding ElementName=MainFrame, Path=Content.Title}"/>
-            <Button Style="{DynamicResource buttonResourse}" Name="btnBack"
+            <Button Style="{StaticResource buttonResourse}" Name="btnBack"
                        Content="Назад" Margin="680,20,0,0" Click="btnBack_Click"/>
         </Grid>
-        <Grid Grid.Row="2" Background="{StaticResource SecondaryBrush}"></Grid>
-       
+
+
         <Frame x:Name="MainFrame"
                NavigationUIVisibility="Hidden"
-               VerticalAlignment="Top"
-               Grid.Row="1" Height="329"/>
-       
+               VerticalAlignment="Center"
+               Grid.Row="1" Height="304" HorizontalAlignment="Center" Width="800" />
+        <Grid Grid.Row="2" Background="{StaticResource SecondaryBrush}"></Grid>
     </Grid>
 </Window>

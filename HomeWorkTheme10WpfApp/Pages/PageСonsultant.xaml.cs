@@ -1,8 +1,13 @@
 ﻿using HomeWorkTheme10WpfApp.Classes;
+using HomeWorkTheme10WpfApp.ViewModels;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +20,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+
 namespace HomeWorkTheme10WpfApp.Pages
 {
     /// <summary>
@@ -25,14 +32,33 @@ namespace HomeWorkTheme10WpfApp.Pages
         public PageСonsultant()
         {
             InitializeComponent();
+         
 
-            string path = "C:\\Users\\Home\\source\\repos\\HomeWorkTheme10WpfApp\\clients.json";
-
-            var listOfClients = new Consultant(path);
-
-            dtgClients.ItemsSource = listOfClients.GetClientsFromJson();
-
-            dtgClients.IsReadOnly= true;
         }
+
+        private void btnChangePhoneNumber_Click(object sender, RoutedEventArgs e)
+        {
+            
+            
+            var currentClient = dtgClients.SelectedItem as Clients;
+            NavigationService.Navigate(new AddEditClientInfoPage(currentClient));
+        }
+
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var listOfClients = new Consultant();
+
+            dtgClients.ItemsSource = listOfClients.GetAllClients();
+        }
+
+
+        //private void dtgClients_MouseUp(object sender, MouseButtonEventArgs e)
+        //{
+
+        //    Clients row = dtgClients.SelectedItem as Clients;
+        //    MessageBox.Show("Номер телефона: "+ row.PhoneNumber);
+
+        //}
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HomeWorkTheme10WpfApp.Classes;
 using HomeWorkTheme10WpfApp.Pages;
+using HomeWorkTheme10WpfApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,17 +29,20 @@ namespace HomeWorkTheme10WpfApp.Pages
             Users usersList = new Users();
 
             cmbUsers.ItemsSource = usersList.CreateUser();
+            
         }
 
         private void btnSignIn_Click(object sender, RoutedEventArgs e)
         {
             if (cmbUsers.SelectedIndex == 0)
             {
+                App.CurrentUser = 0;
                 NavigationService.Navigate(new PageСonsultant());
                 cmbUsers.SelectedIndex = -1;
             }
             else if (cmbUsers.SelectedIndex == 1)
             {
+                App.CurrentUser = 1;
                 NavigationService.Navigate(new PageManager());
                 cmbUsers.SelectedIndex = -1;
             } else

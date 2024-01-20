@@ -9,25 +9,33 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
-using System.Xml.Linq;
+using HomeWorkTheme10WpfApp.Pages;
+using System.Windows.Markup;
 
 namespace HomeWorkTheme10WpfApp.Classes
 {
     internal class Consultant
     {
-        private ObservableCollection<Clients> _clients { get; set; }
+        public ObservableCollection<Clients> _clients { get; set; }
 
-        private string path;
+        public string path = System.IO.Path.GetFullPath("clients.json");
 
-        public Consultant (string Path)
+        public Consultant ()
         {
-            this.path = Path;
            
+            _clients = new ObservableCollection<Clients> ();
+            _clients = GetClientsFromJson();
         }
 
-        public ObservableCollection<Clients> GetClientsFromJson()
+        public ObservableCollection<Clients> GetAllClients ()
         {
-            FileInfo jsonFileName = new FileInfo(this.path);
+            return _clients;
+        }
+
+
+        private ObservableCollection<Clients> GetClientsFromJson()
+        {
+            FileInfo jsonFileName = new FileInfo(path);
 
             if (jsonFileName.Exists)
             {
@@ -44,22 +52,6 @@ namespace HomeWorkTheme10WpfApp.Classes
                     clients.Add(client);
                 }
 
-                foreach (var client in clients)
-                {
-                    if (client.SeriesOfPassport != null)
-                    {
-                        string oldSeriesOfPassport = client.SeriesOfPassport;
-                        string hiddenSeriesOfPassport = HiddenString(oldSeriesOfPassport);
-                        client.SeriesOfPassport = hiddenSeriesOfPassport;
-                    }
-
-                    if (client.NumberOfPassport != null)
-                    {
-                        string oldNumberOfPassport = client.NumberOfPassport;
-                        string hiddenNumberOfPassport = HiddenString(oldNumberOfPassport);
-                        client.NumberOfPassport = hiddenNumberOfPassport;
-                    }
-                }
                 return clients;
             }
             else
@@ -69,14 +61,6 @@ namespace HomeWorkTheme10WpfApp.Classes
                 return clientsNull;
             }
 
-        }
-
-        
-
-        private string HiddenString(string text)
-        {
-            string newText = System.Text.RegularExpressions.Regex.Replace(text, ".", "*");
-            return newText;
         }
 
         private Clients GetClientFromJsonElement(JToken clientJsonElement)
@@ -99,5 +83,61 @@ namespace HomeWorkTheme10WpfApp.Classes
 
             return client;
         }
+
+        public void UpdateClientInfo (Clients currentClient)
+        {
+            var oldClient = _clients.IndexOf(_clients.FirstOrDefault(c => c.Surname == currentClient.Surname && c.Name == currentClient.Name && 
+            c.Patronymic == currentClient.Patronymic && 
+            c.NumberOfPassport == currentClient.NumberOfPassport &&
+            c.SeriesOfPassport == currentClient.SeriesOfPassport));
+
+            _clients.RemoveAt(oldClient);
+            string noteSurname = currentClient.Surname;
+            string noteName = currentClient.Name;
+            string notePatronymic = currentClient.Patronymic;
+            string notePhoneNumber = currentClient.PhoneNumber;
+            string noteSeriesPassportClient = currentClient.SeriesOfPassport;
+            string noteNumberPassportClient = currentClient.NumberOfPassport;
+
+            _clients.Insert(oldClient, new Clients(noteSurname, noteName, notePatronymic, notePhoneNumber, 
+                noteSeriesPassportClient, noteNumberPassportClient));
+            
+            SaveClientsInJsonFile (_clients);
+        }
+        
+        public void SaveClientsInJsonFile (ObservableCollection<Clients> clients)
+        {
+            JArray arrayClients = new JArray();
+            
+            JObject mainTree = new JObject();
+
+            for (int i = 0; i < clients.Count; i++)
+            {
+                JObject obj = new JObject
+                {
+                    ["surname"] = clients[i].Surname,
+                    ["name"] = clients[i].Name,
+                    ["patronymic"] = clients[i].Patronymic,
+
+                    ["passport"] = new JObject
+                    {
+                        ["series"] = clients[i].SeriesOfPassport,
+                        ["number"] = clients[i].NumberOfPassport
+                    },
+                    ["phoneNumber"] = clients[i].PhoneNumber
+                };
+                arrayClients.Add(obj);
+            }
+
+            mainTree["clients"] = arrayClients;
+
+            StreamWriter wr = new StreamWriter(path); //записываем информацию в файл
+            wr.WriteLine(mainTree.ToString());
+            wr.Close();
+
+            MessageBox.Show("Операция выполнена успешно.");
+        }
+
+       
     }
 }
