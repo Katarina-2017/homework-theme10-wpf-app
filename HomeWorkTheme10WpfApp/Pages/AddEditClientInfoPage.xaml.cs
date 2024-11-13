@@ -23,13 +23,13 @@ namespace HomeWorkTheme10WpfApp.Pages
     /// </summary>
     public partial class AddEditClientInfoPage : Page
     {
-        private Clients _currentClient = null;
+        private Consultant _currentClient = null;
         public AddEditClientInfoPage()
         {
             InitializeComponent();
         }
 
-        public AddEditClientInfoPage (Clients client)
+        public AddEditClientInfoPage(Consultant client)
         {
             InitializeComponent();
 
@@ -128,12 +128,9 @@ namespace HomeWorkTheme10WpfApp.Pages
                 }
                 else
                 {
-                        _currentClient.Surname = tbSurname.Text;
-                        _currentClient.Name = tbName.Text;
-                        _currentClient.Patronymic = tbPatronymic.Text;
+                       
                         _currentClient.PhoneNumber = tbPhoneNumber.Text;
-                        _currentClient.SeriesOfPassport = tbSeriesOfPassport.Text;
-                        _currentClient.NumberOfPassport = tbNumberOfPassport.Text;
+                       
 
                         var listClients = new Consultant();
                         listClients.UpdateClientInfo(_currentClient);
@@ -151,11 +148,11 @@ namespace HomeWorkTheme10WpfApp.Pages
                 }
                 else
                 {
-                        Clients newClient = new Clients(tbSurname.Text, tbName.Text, tbPatronymic.Text, tbPhoneNumber.Text, tbSeriesOfPassport.Text, tbNumberOfPassport.Text);
+                        //Clients newClient = new Clients(tbSurname.Text, tbName.Text, tbPatronymic.Text, tbPhoneNumber.Text, tbSeriesOfPassport.Text, tbNumberOfPassport.Text);
 
-                        var listClients = new Manager();
-                        listClients.AddNewClient(newClient);
-                        NavigationService.GoBack();
+                        //var listClients = new Manager();
+                        //listClients.AddNewClient(newClient);
+                        //NavigationService.GoBack();
                     
                 }
             }

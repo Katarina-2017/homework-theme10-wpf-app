@@ -29,10 +29,11 @@ namespace HomeWorkTheme10WpfApp.Pages
     /// </summary>
     public partial class PageСonsultant : Page
     {
+        
+
         public PageСonsultant()
         {
             InitializeComponent();
-         
 
         }
 
@@ -40,7 +41,7 @@ namespace HomeWorkTheme10WpfApp.Pages
         {
             
             
-            var currentClient = dtgClients.SelectedItem as Clients;
+            var currentClient = dtgClients.SelectedItem as Consultant;
             NavigationService.Navigate(new AddEditClientInfoPage(currentClient));
         }
 
@@ -53,12 +54,5 @@ namespace HomeWorkTheme10WpfApp.Pages
         }
 
 
-        //private void dtgClients_MouseUp(object sender, MouseButtonEventArgs e)
-        //{
-
-        //    Clients row = dtgClients.SelectedItem as Clients;
-        //    MessageBox.Show("Номер телефона: "+ row.PhoneNumber);
-
-        //}
     }
 }

@@ -7,39 +7,100 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Media3D;
-using HomeWorkTheme10WpfApp.Pages;
-using System.Windows.Markup;
 
 namespace HomeWorkTheme10WpfApp.Classes
 {
-    internal class Consultant
+    public class Consultant
     {
-        public ObservableCollection<Clients> _clients { get; set; }
+        string surname;
+        string name;
+        string patronymic;
+        string phoneNumber;
+        string seriesOfPassport;
+        string numberOfPassport;
 
-        public string path = System.IO.Path.GetFullPath("clients.json");
+        string path; // Путь к файлу с данными
 
-        public Consultant ()
+        ObservableCollection<Consultant> _clients { get; set; }
+
+        public string Surname
         {
-           
-            _clients = new ObservableCollection<Clients> ();
-            _clients = GetClientsFromJson();
+            get { return this.surname; }
+
+        }
+        public string Name
+        {
+            get { return this.name; }
+
+        }
+        public string Patronymic
+        {
+            get { return this.patronymic; }
+
+        }
+        public string SeriesOfPassport
+        {
+            get
+            {
+                if (seriesOfPassport != "")
+                {
+                    return System.Text.RegularExpressions.Regex.Replace(this.seriesOfPassport.ToString(), ".", "*");
+                }
+                return this.seriesOfPassport.ToString();
+            }
+
         }
 
-        public ObservableCollection<Clients> GetAllClients ()
+        public string NumberOfPassport
+        {
+            get
+            {
+                if (numberOfPassport != "")
+                {
+                    return System.Text.RegularExpressions.Regex.Replace(this.numberOfPassport.ToString(), ".", "*");
+                }
+                return this.numberOfPassport.ToString();
+            }
+
+        }
+
+        public string PhoneNumber
+        {
+            get { return phoneNumber; }
+            set { if (phoneNumber != null) phoneNumber = value; }
+        }
+
+        public Consultant(string Surname, string Name, string Patronymic, string PhoneNumber, string SeriesOfPassport, string NumberOfPassport)
+        {
+            this.surname = Surname;
+            this.name = Name;
+            this.patronymic = Patronymic;
+            this.phoneNumber = PhoneNumber;
+            this.seriesOfPassport = SeriesOfPassport;
+            this.numberOfPassport = NumberOfPassport;
+        }
+
+        public Consultant()
+        {
+            this.path = System.IO.Path.GetFullPath("clients.json"); ;
+            _clients = new ObservableCollection<Consultant>();
+
+            _clients = GetClientsFromJson();
+
+        }
+
+        public ObservableCollection<Consultant> GetAllClients()
         {
             return _clients;
         }
 
-
-        private ObservableCollection<Clients> GetClientsFromJson()
+        private ObservableCollection<Consultant> GetClientsFromJson()
         {
             FileInfo jsonFileName = new FileInfo(path);
 
             if (jsonFileName.Exists)
             {
-                var clients = new ObservableCollection<Clients>();
+                var clients = new ObservableCollection<Consultant>();
 
                 string jsonPath = jsonFileName.FullName;
                 string json = File.ReadAllText(jsonPath);
@@ -56,23 +117,23 @@ namespace HomeWorkTheme10WpfApp.Classes
             }
             else
             {
-                var clientsNull = new ObservableCollection<Clients> ();
-                MessageBox.Show ($"Файл с именем {this.path} не найден.");
+                var clientsNull = new ObservableCollection<Consultant>();
+                MessageBox.Show($"Файл с именем {this.path} не найден.");
                 return clientsNull;
             }
 
         }
 
-        private Clients GetClientFromJsonElement(JToken clientJsonElement)
+        private Consultant GetClientFromJsonElement(JToken clientJsonElement)
         {
             string surnameClient = clientJsonElement["surname"].ToString();
             string nameClient = clientJsonElement["name"].ToString();
             string patronymicClient = clientJsonElement["patronymic"].ToString();
             string seriesPassportClient = clientJsonElement["passport"]["series"].ToString();
-            string numberPassportClient = clientJsonElement["passport"]["number"].ToString();    
+            string numberPassportClient = clientJsonElement["passport"]["number"].ToString();
 
             string phoneNumberClient = clientJsonElement["phoneNumber"].ToString();
-            var client = new Clients(
+            var client = new Consultant(
                         surnameClient,
                         nameClient,
                         patronymicClient,
@@ -84,31 +145,32 @@ namespace HomeWorkTheme10WpfApp.Classes
             return client;
         }
 
-        public void UpdateClientInfo (Clients currentClient)
+        public virtual void UpdateClientInfo(Consultant currentClient)
         {
-            var oldClient = _clients.IndexOf(_clients.FirstOrDefault(c => c.Surname == currentClient.Surname && c.Name == currentClient.Name && 
-            c.Patronymic == currentClient.Patronymic && 
-            c.NumberOfPassport == currentClient.NumberOfPassport &&
-            c.SeriesOfPassport == currentClient.SeriesOfPassport));
+            var oldClient = _clients.IndexOf(_clients.FirstOrDefault(c => c.Surname == currentClient.Surname && c.Name == currentClient.Name &&
+            c.Patronymic == currentClient.Patronymic &&
+            c.numberOfPassport == currentClient.numberOfPassport &&
+            c.seriesOfPassport == currentClient.seriesOfPassport));
 
             _clients.RemoveAt(oldClient);
             string noteSurname = currentClient.Surname;
             string noteName = currentClient.Name;
             string notePatronymic = currentClient.Patronymic;
             string notePhoneNumber = currentClient.PhoneNumber;
-            string noteSeriesPassportClient = currentClient.SeriesOfPassport;
-            string noteNumberPassportClient = currentClient.NumberOfPassport;
+            string noteSeriesPassportClient = currentClient.seriesOfPassport;
+            string noteNumberPassportClient = currentClient.numberOfPassport;
 
-            _clients.Insert(oldClient, new Clients(noteSurname, noteName, notePatronymic, notePhoneNumber, 
+            _clients.Insert(oldClient, new Consultant(noteSurname, noteName, notePatronymic, notePhoneNumber,
                 noteSeriesPassportClient, noteNumberPassportClient));
-            
-            SaveClientsInJsonFile (_clients);
+
+            SaveClientsInJsonFile(_clients);
+
         }
-        
-        public void SaveClientsInJsonFile (ObservableCollection<Clients> clients)
+
+        public void SaveClientsInJsonFile(ObservableCollection<Consultant> clients)
         {
             JArray arrayClients = new JArray();
-            
+
             JObject mainTree = new JObject();
 
             for (int i = 0; i < clients.Count; i++)
@@ -121,8 +183,8 @@ namespace HomeWorkTheme10WpfApp.Classes
 
                     ["passport"] = new JObject
                     {
-                        ["series"] = clients[i].SeriesOfPassport,
-                        ["number"] = clients[i].NumberOfPassport
+                        ["series"] = clients[i].seriesOfPassport,
+                        ["number"] = clients[i].numberOfPassport
                     },
                     ["phoneNumber"] = clients[i].PhoneNumber
                 };
@@ -137,7 +199,5 @@ namespace HomeWorkTheme10WpfApp.Classes
 
             MessageBox.Show("Операция выполнена успешно.");
         }
-
-       
     }
 }
