@@ -22,7 +22,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name = "btnChangePhoneNumber" Content="Изменить" Visibility="{Binding Path=PhoneNumber,Converter={StaticResource MyToVisibilityConverterText} }" Click="btnChangePhoneNumber_Click"></Button>
+                            <Button x:Name = "btnChangePhoneNumber" Tag="ChangePhoneNumber" Content="Изменить" Visibility="{Binding Path=PhoneNumber,Converter={StaticResource MyToVisibilityConverterText} }" Click="btnChangePhoneNumber_Click"></Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

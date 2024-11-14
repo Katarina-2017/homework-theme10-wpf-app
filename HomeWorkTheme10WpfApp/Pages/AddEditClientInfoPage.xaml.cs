@@ -24,20 +24,21 @@ namespace HomeWorkTheme10WpfApp.Pages
     public partial class AddEditClientInfoPage : Page
     {
         private Consultant _currentClient = null;
+        private Manager _currentManagerClient =  new Manager();
+
         public AddEditClientInfoPage()
         {
             InitializeComponent();
         }
 
-        public AddEditClientInfoPage(Consultant client)
+        public AddEditClientInfoPage(Object client, string tagButton)
         {
             InitializeComponent();
 
-           
 
-            if (App.CurrentUser == 0)
+            if (App.CurrentUser == 0 && tagButton== "ChangePhoneNumber")
             {
-                _currentClient = client;
+                _currentClient = (Consultant)client;
 
                 Title = "Изменение телефона клиента";
 
@@ -56,10 +57,29 @@ namespace HomeWorkTheme10WpfApp.Pages
                 tbNumberOfPassport.IsReadOnly = true;
             }
 
-            else if (App.CurrentUser == 1)
+            else if (App.CurrentUser == 1 && tagButton == "AddClient")
             {
                 Title = "Добавление нового клиента";
 
+            }
+            else if (App.CurrentUser == 1 && tagButton == "ChangeTheNoteClient")
+            {
+                _currentClient = (Consultant)client;
+
+                Title = "Изменение данных клиента";
+
+                tbSurname.Text = _currentClient.Surname;
+                
+                tbName.Text = _currentClient.Name;
+                
+                tbPatronymic.Text = _currentClient.Patronymic;
+                
+                tbPhoneNumber.Text = _currentClient.PhoneNumber;
+
+                tbSeriesOfPassport.Text = _currentClient.SeriesOfPassport;
+               
+                tbNumberOfPassport.Text = _currentClient.NumberOfPassport;
+                
             }
         }
 
@@ -128,14 +148,14 @@ namespace HomeWorkTheme10WpfApp.Pages
                 }
                 else
                 {
-                       
-                        _currentClient.PhoneNumber = tbPhoneNumber.Text;
-                       
 
-                        var listClients = new Consultant();
-                        listClients.UpdateClientInfo(_currentClient);
+                    _currentClient.PhoneNumber = tbPhoneNumber.Text;
 
-                        NavigationService.GoBack();
+
+                    var listClients = new Consultant();
+                    listClients.UpdateClientInfo(_currentClient);
+
+                    NavigationService.GoBack();
 
                 }
             }
@@ -148,15 +168,54 @@ namespace HomeWorkTheme10WpfApp.Pages
                 }
                 else
                 {
-                   Manager newClient = new Manager(tbSurname.Text, tbName.Text, tbPatronymic.Text, tbPhoneNumber.Text, tbSeriesOfPassport.Text, tbNumberOfPassport.Text);
+                    Manager newClient = new Manager(tbSurname.Text, tbName.Text, tbPatronymic.Text, tbPhoneNumber.Text, tbSeriesOfPassport.Text, tbNumberOfPassport.Text);
 
                     var listClients = new Manager();
-                    listClients.UpdateClientInfo(newClient);
+                    listClients.AddNewClient(newClient);
                     NavigationService.GoBack();
 
                 }
             }
-            
+            else if (App.CurrentUser == 1 && _currentClient != null) 
+            {
+                var errorMessage = CheckErrorsManager();
+                if (errorMessage.Length > 0)
+                {
+                    MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    _currentManagerClient.Surname = tbSurname.Text;
+                    _currentManagerClient.Name = tbName.Text;
+                    _currentManagerClient.Patronymic = tbPatronymic.Text;
+                    _currentManagerClient.PhoneNumber = tbPhoneNumber.Text;
+                    _currentManagerClient.SeriesOfPassport = tbSeriesOfPassport.Text;
+                    _currentManagerClient.NumberOfPassport = tbNumberOfPassport.Text;
+
+
+                    var listClients = new Manager();
+                    listClients.UpdateClientInfo(_currentClient, _currentManagerClient);
+
+                    NavigationService.GoBack();
+
+                }
+            }
+        }
+
+        public static string CurrentUser(int role)
+        {
+            string currentUser;
+
+            if (role == 0)
+            {
+                currentUser = "Консультант";
+            }
+            else if (role == 1)
+            {
+                currentUser = "Менеджер";
+            }
+            else currentUser = "Неизвестный пользователь";
+            return currentUser;
         }
     }
 }

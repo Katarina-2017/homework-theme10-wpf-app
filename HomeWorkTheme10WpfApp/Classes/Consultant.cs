@@ -10,6 +10,10 @@ using System.Windows;
 
 namespace HomeWorkTheme10WpfApp.Classes
 {
+    interface IConsultant
+    {
+        void UpdateClientInfo(Consultant currentClient);
+    }
     public class Consultant
     {
         protected string surname;
@@ -18,6 +22,11 @@ namespace HomeWorkTheme10WpfApp.Classes
         protected string phoneNumber;
         protected string seriesOfPassport;
         protected string numberOfPassport;
+
+        protected DateTime dateTimeUpdateClientNote;
+        protected string listOfChange;
+        protected string typeOfChangeNote;
+        protected string whoChangedTheNote;
 
         string path; // Путь к файлу с данными
 
@@ -61,6 +70,11 @@ namespace HomeWorkTheme10WpfApp.Classes
             get { return phoneNumber; }
             set { if (phoneNumber != null) phoneNumber = value; }
         }
+
+        public virtual DateTime DateTimeUpdateClientNote { get; set; }
+        public virtual string ListOfChange { get; set; }
+        public virtual string TypeOfChangeNote { get; set; }
+        public virtual string WhoChangedTheNote { get; set; }
 
         public Consultant(string Surname, string Name, string Patronymic, string PhoneNumber, string SeriesOfPassport, string NumberOfPassport)
         {
@@ -141,16 +155,16 @@ namespace HomeWorkTheme10WpfApp.Classes
         {
             var oldClient = _clients.IndexOf(_clients.FirstOrDefault(c => c.Surname == currentClient.Surname && c.Name == currentClient.Name &&
             c.Patronymic == currentClient.Patronymic &&
-            c.numberOfPassport == currentClient.numberOfPassport &&
-            c.seriesOfPassport == currentClient.seriesOfPassport));
+            c.numberOfPassport == currentClient.NumberOfPassport &&
+            c.seriesOfPassport == currentClient.SeriesOfPassport));
 
             _clients.RemoveAt(oldClient);
             string noteSurname = currentClient.Surname;
             string noteName = currentClient.Name;
             string notePatronymic = currentClient.Patronymic;
             string notePhoneNumber = currentClient.PhoneNumber;
-            string noteSeriesPassportClient = currentClient.seriesOfPassport;
-            string noteNumberPassportClient = currentClient.numberOfPassport;
+            string noteSeriesPassportClient = currentClient.SeriesOfPassport;
+            string noteNumberPassportClient = currentClient.NumberOfPassport;
 
             _clients.Insert(oldClient, new Consultant(noteSurname, noteName, notePatronymic, notePhoneNumber,
                 noteSeriesPassportClient, noteNumberPassportClient));

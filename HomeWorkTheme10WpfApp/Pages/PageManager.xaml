@@ -18,9 +18,16 @@
                 <DataGridTextColumn Width="*" Header="Номер телефона" Binding="{Binding PhoneNumber}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="*" Header="Серия паспорта" Binding="{Binding Path=SeriesOfPassport}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="*" Header="Номер паспорта" Binding="{Binding Path=NumberOfPassport}" IsReadOnly="True"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name = "btnChangeTheNoteClient" Tag="ChangeTheNoteClient" Content="Изменить" Click="btnChangeTheNoteClient_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnAddClient"  Content="Добавить клиента" Style="{StaticResource buttonResourse}" Margin="470,255,0,0" Width="135" Height="34" Click="btnAddClient_Click"/>
+        <Button x:Name="btnAddClient" Tag="AddClient" Content="Добавить клиента" Style="{StaticResource buttonResourse}" Margin="470,255,0,0" Width="135" Height="34" Click="btnAddClient_Click"/>
 
 
 

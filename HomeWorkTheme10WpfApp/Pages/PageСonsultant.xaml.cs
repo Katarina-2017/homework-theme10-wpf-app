@@ -39,13 +39,17 @@ namespace HomeWorkTheme10WpfApp.Pages
 
         private void btnChangePhoneNumber_Click(object sender, RoutedEventArgs e)
         {
+            object tag = ((Button)e.OriginalSource).Tag;
+            string tagTheButton = (string)tag;
+
             var currentClient = dtgClients.SelectedItem as Consultant;
-            NavigationService.Navigate(new AddEditClientInfoPage(currentClient));
+            NavigationService.Navigate(new AddEditClientInfoPage(currentClient, tagTheButton));
         }
 
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+
             var listOfClients = new Consultant();
 
             dtgClients.ItemsSource = listOfClients.GetAllClients();

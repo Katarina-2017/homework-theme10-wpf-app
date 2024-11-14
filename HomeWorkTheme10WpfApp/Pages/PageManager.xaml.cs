@@ -25,17 +25,32 @@ namespace HomeWorkTheme10WpfApp.Pages
         {
             InitializeComponent();
         }
+        private void btnAddClient_Click(object sender, RoutedEventArgs e)
+        {
+            object tag = ((Button)e.OriginalSource).Tag;
+            string tagTheButton = (string)tag;
 
+            var currentClient = (sender as Button).DataContext as Manager;
+
+            NavigationService.Navigate(new AddEditClientInfoPage(currentClient, tagTheButton));
+        }
+
+        private void btnChangeTheNoteClient_Click(object sender, RoutedEventArgs e)
+        {
+            object tag = ((Button)e.OriginalSource).Tag;
+            string tagTheButton = (string)tag;
+
+            var currentClient = dtgClients.SelectedItem as Consultant;
+
+            NavigationService.Navigate(new AddEditClientInfoPage(currentClient, tagTheButton));
+        }
+        
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             var listOfClients = new Manager();
             dtgClients.ItemsSource = listOfClients.GetAllClients();
         }
 
-        private void btnAddClient_Click(object sender, RoutedEventArgs e)
-        {
-            var currentClient = (sender as Button).DataContext as Manager;
-            NavigationService.Navigate(new AddEditClientInfoPage(currentClient));
-        }
+        
     }
 }
