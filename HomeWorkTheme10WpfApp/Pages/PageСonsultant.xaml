@@ -10,7 +10,7 @@
       Title="Окно консультанта" Loaded="Page_Loaded">
     <Page.Resources>
         <btv:MyToVisibilityConverterText x:Key="MyToVisibilityConverterText" />
-        <!--<btv:StringTextHiddenConverter x:Key="StringTextHiddenConverter"/>-->
+        <btv:StringTextHiddenConverter x:Key="StringTextHiddenConverter"/>
     </Page.Resources>
     <Grid>
         <DataGrid x:Name="dtgClients" Style="{StaticResource dataGridResourse}" ItemsSource="{Binding}" CanUserAddRows="False">
@@ -26,8 +26,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Width="*" Header="Серия паспорта" Binding="{Binding Path=SeriesOfPassport}" IsReadOnly="True"/>
-                <DataGridTextColumn Width="*" Header="Номер паспорта" Binding="{Binding Path=NumberOfPassport}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="*" Header="Серия паспорта" Binding="{Binding Path=SeriesOfPassport, Converter={StaticResource StringTextHiddenConverter}}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="*" Header="Номер паспорта" Binding="{Binding Path=NumberOfPassport, Converter={StaticResource StringTextHiddenConverter}}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
 

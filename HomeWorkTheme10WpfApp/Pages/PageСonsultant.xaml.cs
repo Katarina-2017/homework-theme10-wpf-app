@@ -39,8 +39,6 @@ namespace HomeWorkTheme10WpfApp.Pages
 
         private void btnChangePhoneNumber_Click(object sender, RoutedEventArgs e)
         {
-            
-            
             var currentClient = dtgClients.SelectedItem as Consultant;
             NavigationService.Navigate(new AddEditClientInfoPage(currentClient));
         }

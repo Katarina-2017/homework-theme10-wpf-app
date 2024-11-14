@@ -10,7 +10,7 @@
       Title="Окно менедженера" Loaded="Page_Loaded">
     <Grid>
 
-        <DataGrid x:Name="dtgClients" Style="{StaticResource dataGridResourse}" ItemsSource="{Binding}" Margin="0,10,0,60">
+        <DataGrid x:Name="dtgClients" Style="{StaticResource dataGridResourse}" ItemsSource="{Binding}" Margin="0,10,0,60" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Фамилия" Binding="{Binding Surname}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="*" Header="Имя" Binding="{Binding Name}" IsReadOnly="True"/>

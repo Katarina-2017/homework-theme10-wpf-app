@@ -12,59 +12,51 @@ namespace HomeWorkTheme10WpfApp.Classes
 {
     public class Consultant
     {
-        string surname;
-        string name;
-        string patronymic;
-        string phoneNumber;
-        string seriesOfPassport;
-        string numberOfPassport;
+        protected string surname;
+        protected string name;
+        protected string patronymic;
+        protected string phoneNumber;
+        protected string seriesOfPassport;
+        protected string numberOfPassport;
 
         string path; // Путь к файлу с данными
 
-        ObservableCollection<Consultant> _clients { get; set; }
+        public ObservableCollection<Consultant> _clients { get; set; }
 
-        public string Surname
+        public virtual string Surname
         {
             get { return this.surname; }
 
         }
-        public string Name
+        public virtual string Name
         {
             get { return this.name; }
 
         }
-        public string Patronymic
+        public virtual string Patronymic
         {
             get { return this.patronymic; }
 
         }
-        public string SeriesOfPassport
+        public virtual string SeriesOfPassport
         {
             get
             {
-                if (seriesOfPassport != "")
-                {
-                    return System.Text.RegularExpressions.Regex.Replace(this.seriesOfPassport.ToString(), ".", "*");
-                }
                 return this.seriesOfPassport.ToString();
             }
 
         }
 
-        public string NumberOfPassport
+        public virtual string NumberOfPassport
         {
             get
             {
-                if (numberOfPassport != "")
-                {
-                    return System.Text.RegularExpressions.Regex.Replace(this.numberOfPassport.ToString(), ".", "*");
-                }
                 return this.numberOfPassport.ToString();
             }
 
         }
 
-        public string PhoneNumber
+        public virtual string PhoneNumber
         {
             get { return phoneNumber; }
             set { if (phoneNumber != null) phoneNumber = value; }

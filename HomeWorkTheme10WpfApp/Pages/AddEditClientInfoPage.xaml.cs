@@ -50,9 +50,9 @@ namespace HomeWorkTheme10WpfApp.Pages
 
                 tbPhoneNumber.Text = _currentClient.PhoneNumber;
 
-                tbSeriesOfPassport.Text = _currentClient.SeriesOfPassport;
+                tbSeriesOfPassport.Text = System.Text.RegularExpressions.Regex.Replace(_currentClient.SeriesOfPassport.ToString(), ".", "*");
                 tbSeriesOfPassport.IsReadOnly = true;
-                tbNumberOfPassport.Text = _currentClient.NumberOfPassport;
+                tbNumberOfPassport.Text = System.Text.RegularExpressions.Regex.Replace(_currentClient.NumberOfPassport.ToString(), ".", "*");
                 tbNumberOfPassport.IsReadOnly = true;
             }
 
@@ -148,12 +148,12 @@ namespace HomeWorkTheme10WpfApp.Pages
                 }
                 else
                 {
-                        //Clients newClient = new Clients(tbSurname.Text, tbName.Text, tbPatronymic.Text, tbPhoneNumber.Text, tbSeriesOfPassport.Text, tbNumberOfPassport.Text);
+                   Manager newClient = new Manager(tbSurname.Text, tbName.Text, tbPatronymic.Text, tbPhoneNumber.Text, tbSeriesOfPassport.Text, tbNumberOfPassport.Text);
 
-                        //var listClients = new Manager();
-                        //listClients.AddNewClient(newClient);
-                        //NavigationService.GoBack();
-                    
+                    var listClients = new Manager();
+                    listClients.UpdateClientInfo(newClient);
+                    NavigationService.GoBack();
+
                 }
             }
             

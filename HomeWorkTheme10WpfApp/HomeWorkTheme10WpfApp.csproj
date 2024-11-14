@@ -59,8 +59,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Consultant.cs" />
+    <Compile Include="Classes\Manager.cs" />
     <Compile Include="Classes\MyToVisibilityConverter .cs" />
-    <Compile Include="Classes\StringTextHiddenConverter.cs" />
+    <Compile Include="Classes\StringTextHiddenConverter .cs" />
     <Compile Include="Pages\AddEditClientInfoPage.xaml.cs">
       <DependentUpon>AddEditClientInfoPage.xaml</DependentUpon>
     </Compile>

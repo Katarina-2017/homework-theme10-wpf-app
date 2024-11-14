@@ -28,14 +28,14 @@ namespace HomeWorkTheme10WpfApp.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //var listOfClients = new Manager();
-            //dtgClients.ItemsSource = listOfClients.GetAllClients();
+            var listOfClients = new Manager();
+            dtgClients.ItemsSource = listOfClients.GetAllClients();
         }
 
         private void btnAddClient_Click(object sender, RoutedEventArgs e)
         {
-            //var currentClient = (sender as Button).DataContext as Clients;
-            //NavigationService.Navigate(new AddEditClientInfoPage(currentClient));
+            var currentClient = (sender as Button).DataContext as Manager;
+            NavigationService.Navigate(new AddEditClientInfoPage(currentClient));
         }
     }
 }
