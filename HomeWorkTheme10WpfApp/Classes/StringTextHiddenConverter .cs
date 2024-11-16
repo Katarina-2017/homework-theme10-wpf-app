@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace HomeWorkTheme10WpfApp.Classes
 {
+    /// <summary>
+    /// Класс StringTextHiddenConverter - управляет видимостью серии и номера паспорта
+    /// </summary>
     internal class StringTextHiddenConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

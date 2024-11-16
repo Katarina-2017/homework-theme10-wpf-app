@@ -25,24 +25,28 @@ namespace HomeWorkTheme10WpfApp.Pages
         public PageLogin()
         {
             InitializeComponent();
+            //формируем список пользователей
             Users usersList = new Users();
 
-            cmbUsers.ItemsSource = usersList.CreateUser();
+            cmbUsers.ItemsSource = usersList.CreateUser();//устанавливаем список пользователей для Combobox
             
         }
 
         private void btnSignIn_Click(object sender, RoutedEventArgs e)
         {
+            //Если выбрали роль Консультант
             if (cmbUsers.SelectedIndex == 0)
             {
                 App.CurrentUser = 0;
-                NavigationService.Navigate(new PageСonsultant());
+                NavigationService.Navigate(new PageСonsultant()); //Откываем страницу Консультанта
                 cmbUsers.SelectedIndex = -1;
             }
+
+            //Если выбрали роль Менеджер 
             else if (cmbUsers.SelectedIndex == 1)
             {
                 App.CurrentUser = 1;
-                NavigationService.Navigate(new PageManager());
+                NavigationService.Navigate(new PageManager()); //Открываем страницу Менеджера
                 cmbUsers.SelectedIndex = -1;
             } else
             {

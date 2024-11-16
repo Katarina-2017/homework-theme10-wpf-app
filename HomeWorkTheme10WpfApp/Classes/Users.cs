@@ -8,6 +8,9 @@ using System.Xml.Linq;
 
 namespace HomeWorkTheme10WpfApp.Classes
 {
+    /// <summary>
+    /// Класс Users - управляет списком ролей пользователей, работающих в системе
+    /// </summary>
     public class Users
     {
         public string Role { get; set; } = "";

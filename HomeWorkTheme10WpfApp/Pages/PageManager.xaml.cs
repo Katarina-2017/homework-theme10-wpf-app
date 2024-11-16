@@ -27,30 +27,38 @@ namespace HomeWorkTheme10WpfApp.Pages
         }
         private void btnAddClient_Click(object sender, RoutedEventArgs e)
         {
+            //определяем какая кнопка нажата
             object tag = ((Button)e.OriginalSource).Tag;
             string tagTheButton = (string)tag;
 
-            var currentClient = (sender as Button).DataContext as Manager;
+            var currentClient = (sender as Button).DataContext as Manager;//формируем пустого клиента при нажатии на кнопку Добавить
 
+            //открываем форму Добавления/Редактирования и передаем выбранного клиента и тэг нажатой кнопки
             NavigationService.Navigate(new AddEditClientInfoPage(currentClient, tagTheButton));
         }
-
+        
+        /// <summary>
+        /// Метод нажания на кнопку Измененить
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnChangeTheNoteClient_Click(object sender, RoutedEventArgs e)
         {
+            //определяем какая кнопка нажата
             object tag = ((Button)e.OriginalSource).Tag;
             string tagTheButton = (string)tag;
 
-            var currentClient = dtgClients.SelectedItem as Consultant;
+            var currentClient = dtgClients.SelectedItem as Consultant;//сохраняем выбранную строку с информацией о клиенте
 
+            //открываем форму Добавления/Редактирования и передаем выбранного клиента и тэг нажатой кнопки
             NavigationService.Navigate(new AddEditClientInfoPage(currentClient, tagTheButton));
         }
         
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            //формируем список клиентов и устанавливаем в качестве источника данных DataGrid
             var listOfClients = new Manager();
             dtgClients.ItemsSource = listOfClients.GetAllClients();
         }
-
-        
     }
 }

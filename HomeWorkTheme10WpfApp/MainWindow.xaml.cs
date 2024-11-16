@@ -33,7 +33,7 @@ namespace HomeWorkTheme10WpfApp
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            //Обработка функциональности при нажатии на кнопку назад
+            //Обработка функциональности при нажатии на кнопку Назад
             if (MainFrame.CanGoBack)
             {
                 MainFrame.GoBack();

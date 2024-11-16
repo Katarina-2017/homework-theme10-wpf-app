@@ -32,17 +32,23 @@ namespace HomeWorkTheme10WpfApp.Pages
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Метод AddEditClientInfoPage(Object client, string tagButton) - страница с изменениями информации о клиенте
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="tagButton"></param>
         public AddEditClientInfoPage(Object client, string tagButton)
         {
             InitializeComponent();
 
-
+            //Если выбрали пользователя консультант и нажата кнопки Изменить
             if (App.CurrentUser == 0 && tagButton== "ChangePhoneNumber")
             {
                 _currentClient = (Consultant)client;
 
-                Title = "Изменение телефона клиента";
+                Title = "Изменение телефона клиента"; //меняем заголовок у формы
 
+                //передаем данные о клиенте в текст боксы
                 tbSurname.Text = _currentClient.Surname;
                 tbSurname.IsReadOnly = true;
                 tbName.Text = _currentClient.Name;
@@ -52,38 +58,42 @@ namespace HomeWorkTheme10WpfApp.Pages
 
                 tbPhoneNumber.Text = _currentClient.PhoneNumber;
 
+                //скрываем серию и номер паспорта
                 tbSeriesOfPassport.Text = System.Text.RegularExpressions.Regex.Replace(_currentClient.SeriesOfPassport.ToString(), ".", "*");
                 tbSeriesOfPassport.IsReadOnly = true;
                 tbNumberOfPassport.Text = System.Text.RegularExpressions.Regex.Replace(_currentClient.NumberOfPassport.ToString(), ".", "*");
                 tbNumberOfPassport.IsReadOnly = true;
             }
 
+            //Если выбрали пользователя менеджер и нажата кнопка Добавить клиента
             else if (App.CurrentUser == 1 && tagButton == "AddClient")
             {
-                Title = "Добавление нового клиента";
+                Title = "Добавление нового клиента"; //меняем заголовок у формы
 
             }
+
+            //Если выбрали пользователя менеджер и нажата кнопка Изменить
             else if (App.CurrentUser == 1 && tagButton == "ChangeTheNoteClient")
             {
                 _currentClient = (Consultant)client;
 
-                Title = "Изменение данных клиента";
+                Title = "Изменение данных клиента"; //меняем заголовок у формы
 
+                //передаем данные о клиенте в текст боксы
                 tbSurname.Text = _currentClient.Surname;
-                
                 tbName.Text = _currentClient.Name;
-                
                 tbPatronymic.Text = _currentClient.Patronymic;
-                
                 tbPhoneNumber.Text = _currentClient.PhoneNumber;
-
                 tbSeriesOfPassport.Text = _currentClient.SeriesOfPassport;
-               
                 tbNumberOfPassport.Text = _currentClient.NumberOfPassport;
                 
             }
         }
 
+        /// <summary>
+        /// Метод CheckErrorsManager() - проверяет заполнение полей для менеджера
+        /// </summary>
+        /// <returns></returns>
         private string CheckErrorsManager()
         {
             var errorBuilder = new StringBuilder();
@@ -125,6 +135,10 @@ namespace HomeWorkTheme10WpfApp.Pages
              return errorBuilder.ToString();
         }
 
+        /// <summary>
+        /// Метод CheckErrorsConsultant() - проверяет заполнение полей для консультанта
+        /// </summary>
+        /// <returns></returns>
         private string CheckErrorsConsultant()
         {
             var errorBuilder = new StringBuilder();
@@ -138,8 +152,14 @@ namespace HomeWorkTheme10WpfApp.Pages
             return errorBuilder.ToString();
         }
 
+        /// <summary>
+        /// Метод btnSaveChanges_Click - сохранение информации
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
+            //Сохраняем новый номер телефона, если зашли под консультантом
             if (App.CurrentUser == 0 && _currentClient != null)
             {
                 var errorMessage = CheckErrorsConsultant();
@@ -155,8 +175,9 @@ namespace HomeWorkTheme10WpfApp.Pages
 
 
                     var listClients = new Consultant();
-                    listClients.UpdateClientInfo(_currentClient);
+                    listClients.UpdateClientInfo(_currentClient);//Обновляем номер телефона у выбранного клиента
 
+                    //заполняем информацию по сделанным изменениям и записываем ее в строку temp 
                     _currentClient.DateTimeUpdateClientNote = DateTime.Now;
                     _currentClient.ListOfChange = $"Номер телефона {oldPhoneNumber} изменен на {_currentClient.PhoneNumber}";
                     _currentClient.TypeOfChangeNote = "Изменение";
@@ -171,12 +192,13 @@ namespace HomeWorkTheme10WpfApp.Pages
                         _currentClient.Name,
                         _currentClient.Patronymic);
 
-                    listClients.SaveListOfChange(temp);
+                    listClients.SaveListOfChange(temp); // сохраняем строку с изменениями в текстовый файл
 
                     NavigationService.GoBack();
 
                 }
             }
+            //Сохраняем информацию о новом клиенте, если зашли под менеджером
             else if (App.CurrentUser == 1 && _currentClient == null)
             {
                 var errorMessage = CheckErrorsManager();
@@ -189,8 +211,9 @@ namespace HomeWorkTheme10WpfApp.Pages
                     Manager newClient = new Manager(tbSurname.Text, tbName.Text, tbPatronymic.Text, tbPhoneNumber.Text, tbSeriesOfPassport.Text, tbNumberOfPassport.Text);
 
                     var listClients = new Manager();
-                    listClients.AddNewClient(newClient);
+                    listClients.AddNewClient(newClient); //Добавляем информацию о новом клиенте
 
+                    //заполняем информацию по сделанным изменениям и записываем ее в строку temp 
                     newClient.DateTimeUpdateClientNote = DateTime.Now;
                     newClient.ListOfChange = $"Добавлен новый клиент {tbSurname.Text} {tbName.Text} {tbPatronymic.Text} {tbPhoneNumber.Text}";
                     newClient.TypeOfChangeNote = "Добавление";
@@ -201,12 +224,13 @@ namespace HomeWorkTheme10WpfApp.Pages
                         newClient.ListOfChange,
                         newClient.TypeOfChangeNote,
                         newClient.WhoChangedTheNote);
-                    listClients.SaveListOfChange(temp);
+                    listClients.SaveListOfChange(temp); // сохраняем строку с изменениями в текстовый файл
 
                     NavigationService.GoBack();
 
                 }
             }
+            //Сохраняем внесенные изменения в информацию о клиенте, если зашли под менеджером
             else if (App.CurrentUser == 1 && _currentClient != null) 
             {
                 var errorMessage = CheckErrorsManager();
@@ -225,8 +249,9 @@ namespace HomeWorkTheme10WpfApp.Pages
 
 
                     var listClients = new Manager();
-                    listClients.UpdateClientInfo(_currentClient, _currentManagerClient);
+                    listClients.UpdateClientInfo(_currentClient, _currentManagerClient);//обновляем информацию у выбранного клиента
 
+                    //заполняем информацию по сделанным изменениям и записываем ее в строку temp
                     _currentManagerClient.DateTimeUpdateClientNote = DateTime.Now;
                     _currentManagerClient.ListOfChange = $"Изменена основная информация о клиенте: {_currentClient.Surname} {_currentClient.Name} " +
                         $"{_currentClient.Patronymic} {_currentClient.PhoneNumber} {_currentClient.SeriesOfPassport} {_currentClient.NumberOfPassport} на " +
@@ -240,7 +265,7 @@ namespace HomeWorkTheme10WpfApp.Pages
                         _currentManagerClient.ListOfChange,
                         _currentManagerClient.TypeOfChangeNote,
                         _currentManagerClient.WhoChangedTheNote);
-                    listClients.SaveListOfChange(temp);
+                    listClients.SaveListOfChange(temp); // сохраняем строку с изменениями в текстовый файл
 
                     NavigationService.GoBack();
 
@@ -248,6 +273,11 @@ namespace HomeWorkTheme10WpfApp.Pages
             }
         }
 
+        /// <summary>
+        /// Переводим роль, которую выбрали в текстовое значение
+        /// </summary>
+        /// <param name="role">Роль пользователя</param>
+        /// <returns></returns>
         public static string CurrentUser(int role)
         {
             string currentUser;

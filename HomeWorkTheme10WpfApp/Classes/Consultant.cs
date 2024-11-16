@@ -10,6 +10,7 @@ using System.Windows;
 
 namespace HomeWorkTheme10WpfApp.Classes
 {
+    //Интерфейс для консультанта
     interface IConsultant
     {
         DateTime DateTimeUpdateClientNote { get; set; }
@@ -19,8 +20,12 @@ namespace HomeWorkTheme10WpfApp.Classes
 
         void UpdateClientInfo(Consultant currentClient);
     }
+    /// <summary>
+    /// Класс Консультант
+    /// </summary>
     public class Consultant
     {
+        //Основные поля
         protected string surname;
         protected string name;
         protected string patronymic;
@@ -33,11 +38,12 @@ namespace HomeWorkTheme10WpfApp.Classes
         protected string typeOfChangeNote;
         protected string whoChangedTheNote;
 
-        string path; // Путь к файлу с данными
-        string pathOfListChange = System.IO.Path.GetFullPath("listOfChange.txt");
+        string path; // Путь к файлу с клиентами
+        string pathOfListChange = System.IO.Path.GetFullPath("listOfChange.txt"); //Путь к файлу с данными
 
-        public ObservableCollection<Consultant> _clients { get; set; }
+        public ObservableCollection<Consultant> _clients { get; set; } //Список клиентов
 
+        //Свойства
         public virtual string Surname
         {
             get { return this.surname; }
@@ -82,6 +88,7 @@ namespace HomeWorkTheme10WpfApp.Classes
         public virtual string TypeOfChangeNote { get; set; }
         public virtual string WhoChangedTheNote { get; set; }
 
+        //Конструкторы
         public Consultant(string Surname, string Name, string Patronymic, string PhoneNumber, string SeriesOfPassport, string NumberOfPassport)
         {
             this.surname = Surname;
@@ -101,11 +108,19 @@ namespace HomeWorkTheme10WpfApp.Classes
 
         }
 
+        /// <summary>
+        /// Метод GetAllClients() - возвращает список всех клиентов
+        /// </summary>
+        /// <returns></returns>
         public ObservableCollection<Consultant> GetAllClients()
         {
             return _clients;
         }
 
+        /// <summary>
+        /// GetClientsFromJson() - возвращает список клиентов из json-файла
+        /// </summary>
+        /// <returns></returns>
         private ObservableCollection<Consultant> GetClientsFromJson()
         {
             FileInfo jsonFileName = new FileInfo(path);
@@ -136,6 +151,11 @@ namespace HomeWorkTheme10WpfApp.Classes
 
         }
 
+        /// <summary>
+        /// Метод GetClientFromJsonElement(JToken clientJsonElement) - возращает одного клиента из json-файла
+        /// </summary>
+        /// <param name="clientJsonElement">отдельный элемент json-файла</param>
+        /// <returns></returns>
         private Consultant GetClientFromJsonElement(JToken clientJsonElement)
         {
             string surnameClient = clientJsonElement["surname"].ToString();
@@ -157,14 +177,20 @@ namespace HomeWorkTheme10WpfApp.Classes
             return client;
         }
 
+        /// <summary>
+        /// Метод UpdateClientInfo(Consultant currentClient) - изменения номера телефона клиента
+        /// </summary>
+        /// <param name="currentClient">текущий клиент</param>
         public virtual void UpdateClientInfo(Consultant currentClient)
         {
             var oldClient = _clients.IndexOf(_clients.FirstOrDefault(c => c.Surname == currentClient.Surname && c.Name == currentClient.Name &&
             c.Patronymic == currentClient.Patronymic &&
             c.numberOfPassport == currentClient.NumberOfPassport &&
-            c.seriesOfPassport == currentClient.SeriesOfPassport));
+            c.seriesOfPassport == currentClient.SeriesOfPassport)); //ищем клиента в списке клиентов
 
-            _clients.RemoveAt(oldClient);
+            _clients.RemoveAt(oldClient); //удаляем выбранного клиента
+
+            //изменяем только номер телефона
             string noteSurname = currentClient.Surname;
             string noteName = currentClient.Name;
             string notePatronymic = currentClient.Patronymic;
@@ -173,12 +199,16 @@ namespace HomeWorkTheme10WpfApp.Classes
             string noteNumberPassportClient = currentClient.NumberOfPassport;
 
             _clients.Insert(oldClient, new Consultant(noteSurname, noteName, notePatronymic, notePhoneNumber,
-                noteSeriesPassportClient, noteNumberPassportClient));
+                noteSeriesPassportClient, noteNumberPassportClient)); //вставляем клиента с новым номером телефона на место удаленного клиента 
 
-            SaveClientsInJsonFile(_clients);
+            SaveClientsInJsonFile(_clients); //сохраняем список клиентов
 
         }
 
+        /// <summary>
+        /// Метод SaveListOfChange (String stringOfChange) - сохраняет сделанные изменения в файл 
+        /// </summary>
+        /// <param name="stringOfChange">строка с изменениями</param>
         public void SaveListOfChange (String stringOfChange)
         {
             FileInfo userFileName = new FileInfo(pathOfListChange);
@@ -188,6 +218,10 @@ namespace HomeWorkTheme10WpfApp.Classes
             }
         }
 
+        /// <summary>
+        /// Метод SaveClientsInJsonFile(ObservableCollection<Consultant> clients) - сохраняет список клиентов в json-файл
+        /// </summary>
+        /// <param name="clients">список клиентов</param>
         public void SaveClientsInJsonFile(ObservableCollection<Consultant> clients)
         {
             JArray arrayClients = new JArray();

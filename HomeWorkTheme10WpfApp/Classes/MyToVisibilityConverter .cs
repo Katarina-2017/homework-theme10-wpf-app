@@ -9,6 +9,9 @@ using System.Windows.Data;
 
 namespace HomeWorkTheme10WpfApp.Classes
 {
+    /// <summary>
+    /// Класс MyToVisibilityConverterText  - управляет видимостью кнопки в зависимости от наличия номера телефона
+    /// </summary>
     internal class MyToVisibilityConverterText : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

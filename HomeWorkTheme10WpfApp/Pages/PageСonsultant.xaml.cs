@@ -28,7 +28,6 @@ namespace HomeWorkTheme10WpfApp.Pages
     /// </summary>
     public partial class PageСonsultant : Page
     {
-        
 
         public PageСonsultant()
         {
@@ -38,22 +37,24 @@ namespace HomeWorkTheme10WpfApp.Pages
 
         private void btnChangePhoneNumber_Click(object sender, RoutedEventArgs e)
         {
+            //определяет какая кнопка нажата
             object tag = ((Button)e.OriginalSource).Tag;
             string tagTheButton = (string)tag;
 
-            var currentClient = dtgClients.SelectedItem as Consultant;
-            NavigationService.Navigate(new AddEditClientInfoPage(currentClient, tagTheButton));
+            var currentClient = dtgClients.SelectedItem as Consultant; //сохраняем выбранную строку с информацией о клиенте
+
+            //открываем форму Добавления/Редактирования и передаем выбранного клиента и тэг нажатой кнопки
+            NavigationService.Navigate(new AddEditClientInfoPage(currentClient, tagTheButton)); 
         }
 
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            //формируем список клиентов и устанавливаем в качестве источника данных DataGrid
             var listOfClients = new Consultant();
 
             dtgClients.ItemsSource = listOfClients.GetAllClients();
         }
-
 
     }
 }
