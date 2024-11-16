@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -148,12 +149,29 @@ namespace HomeWorkTheme10WpfApp.Pages
                 }
                 else
                 {
+                    string oldPhoneNumber = _currentClient.PhoneNumber;
 
                     _currentClient.PhoneNumber = tbPhoneNumber.Text;
 
 
                     var listClients = new Consultant();
                     listClients.UpdateClientInfo(_currentClient);
+
+                    _currentClient.DateTimeUpdateClientNote = DateTime.Now;
+                    _currentClient.ListOfChange = $"Номер телефона {oldPhoneNumber} изменен на {_currentClient.PhoneNumber}";
+                    _currentClient.TypeOfChangeNote = "Изменение";
+                    _currentClient.WhoChangedTheNote = CurrentUser(App.CurrentUser);
+
+                    string temp = String.Format("{0} # {1} # {2} # {3} # у клиента {4} {5} {6} ",
+                        _currentClient.DateTimeUpdateClientNote,
+                        _currentClient.ListOfChange,
+                        _currentClient.TypeOfChangeNote,
+                        _currentClient.WhoChangedTheNote,
+                        _currentClient.Surname,
+                        _currentClient.Name,
+                        _currentClient.Patronymic);
+
+                    listClients.SaveListOfChange(temp);
 
                     NavigationService.GoBack();
 
@@ -172,6 +190,19 @@ namespace HomeWorkTheme10WpfApp.Pages
 
                     var listClients = new Manager();
                     listClients.AddNewClient(newClient);
+
+                    newClient.DateTimeUpdateClientNote = DateTime.Now;
+                    newClient.ListOfChange = $"Добавлен новый клиент {tbSurname.Text} {tbName.Text} {tbPatronymic.Text} {tbPhoneNumber.Text}";
+                    newClient.TypeOfChangeNote = "Добавление";
+                    newClient.WhoChangedTheNote = CurrentUser(App.CurrentUser);
+
+                    string temp = String.Format("{0} # {1} # {2} # {3}",
+                        newClient.DateTimeUpdateClientNote,
+                        newClient.ListOfChange,
+                        newClient.TypeOfChangeNote,
+                        newClient.WhoChangedTheNote);
+                    listClients.SaveListOfChange(temp);
+
                     NavigationService.GoBack();
 
                 }
@@ -195,6 +226,21 @@ namespace HomeWorkTheme10WpfApp.Pages
 
                     var listClients = new Manager();
                     listClients.UpdateClientInfo(_currentClient, _currentManagerClient);
+
+                    _currentManagerClient.DateTimeUpdateClientNote = DateTime.Now;
+                    _currentManagerClient.ListOfChange = $"Изменена основная информация о клиенте: {_currentClient.Surname} {_currentClient.Name} " +
+                        $"{_currentClient.Patronymic} {_currentClient.PhoneNumber} {_currentClient.SeriesOfPassport} {_currentClient.NumberOfPassport} на " +
+                        $"{_currentManagerClient.Surname} {_currentManagerClient.Name} {_currentManagerClient.Patronymic} {_currentManagerClient.PhoneNumber} " +
+                        $"{_currentManagerClient.SeriesOfPassport} {_currentManagerClient.NumberOfPassport}";
+                    _currentManagerClient.TypeOfChangeNote = "Изменение";
+                    _currentManagerClient.WhoChangedTheNote = CurrentUser(App.CurrentUser);
+
+                    string temp = String.Format("{0} # {1} # {2} # {3}",
+                        _currentManagerClient.DateTimeUpdateClientNote,
+                        _currentManagerClient.ListOfChange,
+                        _currentManagerClient.TypeOfChangeNote,
+                        _currentManagerClient.WhoChangedTheNote);
+                    listClients.SaveListOfChange(temp);
 
                     NavigationService.GoBack();
 

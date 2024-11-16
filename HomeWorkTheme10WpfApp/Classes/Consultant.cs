@@ -12,6 +12,11 @@ namespace HomeWorkTheme10WpfApp.Classes
 {
     interface IConsultant
     {
+        DateTime DateTimeUpdateClientNote { get; set; }
+        string ListOfChange { get; set; }
+        string TypeOfChange { get; set; }
+        string WhoChangedTheNote { get; set; }
+
         void UpdateClientInfo(Consultant currentClient);
     }
     public class Consultant
@@ -29,6 +34,7 @@ namespace HomeWorkTheme10WpfApp.Classes
         protected string whoChangedTheNote;
 
         string path; // Путь к файлу с данными
+        string pathOfListChange = System.IO.Path.GetFullPath("listOfChange.txt");
 
         public ObservableCollection<Consultant> _clients { get; set; }
 
@@ -171,6 +177,15 @@ namespace HomeWorkTheme10WpfApp.Classes
 
             SaveClientsInJsonFile(_clients);
 
+        }
+
+        public void SaveListOfChange (String stringOfChange)
+        {
+            FileInfo userFileName = new FileInfo(pathOfListChange);
+            using (StreamWriter sw = new StreamWriter(pathOfListChange, true))
+            {
+                sw.WriteLine(stringOfChange);
+            }
         }
 
         public void SaveClientsInJsonFile(ObservableCollection<Consultant> clients)

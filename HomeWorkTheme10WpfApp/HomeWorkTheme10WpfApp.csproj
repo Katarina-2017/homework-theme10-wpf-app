@@ -65,8 +65,6 @@
     <Compile Include="Pages\AddEditClientInfoPage.xaml.cs">
       <DependentUpon>AddEditClientInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\ButtonViewModel.cs" />
     <Page Include="DictionaryStyleComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

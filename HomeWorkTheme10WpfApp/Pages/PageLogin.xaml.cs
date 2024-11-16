@@ -1,6 +1,5 @@
 ﻿using HomeWorkTheme10WpfApp.Classes;
 using HomeWorkTheme10WpfApp.Pages;
-using HomeWorkTheme10WpfApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
